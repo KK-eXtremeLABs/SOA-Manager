@@ -1,0 +1,47 @@
+export type Transaction = {
+  date: string;
+  reference: string;
+  transactionable_type: string;
+  transactionable_id: number;
+  association_id: number;
+  company_id: number;
+  description: string;
+  amount: number;
+  type: 'debit' | 'credit';
+  association: any;
+  company: any;
+  balance?: number;
+};
+
+export type OaTransaction = {
+  id: number;
+  trx_number: string;
+  account_id: number;
+  ledgerable_type: string;
+  ledgerable_id: number;
+  books: 'Company' | 'Community';
+  type: 'debit' | 'credit';
+  amount: number;
+  vat: number;
+  note: string | null;
+  memo: string | null;
+  user_reference: string | null;
+  payment_method: string;
+  company_id: number;
+  association_id: number;
+  transactionable_id: number | null;
+  transactionable_type: string | null;
+  reason: string | null;
+  datetime: string;
+  bank_transaction_id: string | null;
+  reconciled_at: string | null;
+  created_at: string;
+  updated_at: string;
+  cancelled_at: string | null;
+  total_amount: number;
+  description: string;
+  balance: number | null;
+  association: any;
+  company: any;
+  transactionable: any;
+};

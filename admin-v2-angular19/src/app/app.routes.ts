@@ -70,14 +70,16 @@ export const routes: Routes = [
           ).then((m) => m.ListNotificationsComponent),
       },
 
-      // Feature modules (lazy-loaded, placeholders for now)
+      // Accounting (child routes with landing nav)
       {
         path: 'accounting',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
+        loadChildren: () =>
+          import('./features/accounting/accounting.routes').then(
+            (m) => m.accountingRoutes
           ),
       },
+
+      // Feature modules (lazy-loaded, placeholders for now)
       {
         path: 'associations',
         canActivate: [canAccessGuard],
