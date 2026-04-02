@@ -1,0 +1,28 @@
+<section class="sub-header"><div class="header-row"><h3>Organization Details</h3><a mat-stroked-button color="primary" routerLink="/organizations"><mat-icon>chevron_left</mat-icon> Back</a></div></section>
+@if (pageLoader) { <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div> }
+@if (org) {
+  <div class="detail-grid">
+    <mat-card>
+      <mat-card-header><mat-card-title>{{ org.company_name }}</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="info-row"><strong>Email:</strong> {{ org.contact_email }}</div>
+        <div class="info-row"><strong>Phone:</strong> {{ org.contact_number }}</div>
+        <div class="info-row"><strong>TRN:</strong> {{ org.TRN_number || 'N/A' }}</div>
+        <div class="info-row"><strong>Status:</strong> {{ org.subscription_status || 'active' }}</div>
+        <div class="info-row"><strong>Created:</strong> {{ org.created_at | date:'mediumDate' }}</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header><mat-card-title>Subscription</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="info-row"><strong>Pricing:</strong> {{ org.pricing?.name || 'N/A' }}</div>
+        <div class="info-row"><strong>White Label:</strong> {{ org.is_white_labelled ? 'Yes' : 'No' }}</div>
+        <div class="info-row"><strong>Inspections:</strong> {{ org.is_inspections_enabled ? 'Enabled' : 'Disabled' }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <mat-tab-group>
+    <mat-tab label="Associations"><p class="tab-placeholder">Associations list for this organization</p></mat-tab>
+    <mat-tab label="Billing History"><p class="tab-placeholder">Billing history</p></mat-tab>
+  </mat-tab-group>
+}

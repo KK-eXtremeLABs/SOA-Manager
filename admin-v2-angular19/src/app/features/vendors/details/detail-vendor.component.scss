@@ -1,0 +1,6 @@
+@use 'styles/variables' as v;
+.sub-header { padding: 0 0 16px; } .header-row { display: flex; justify-content: space-between; align-items: center; } .header-row h3 { margin: 0; color: v.$primary-color; }
+.loading-overlay { display: flex; justify-content: center; padding: 48px 0; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; @media (max-width: 768px) { grid-template-columns: 1fr; } }
+.info-row { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.875rem; strong { min-width: 130px; display: inline-block; } }
+.license-img { max-width: 100%; border-radius: 4px; }

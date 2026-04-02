@@ -1,0 +1,24 @@
+<section class="sub-header"><div class="header-row"><h3>Vendor Details</h3><a mat-stroked-button color="primary" routerLink="/vendors"><mat-icon>chevron_left</mat-icon> Back</a></div></section>
+@if (pageLoader) { <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div> }
+@if (vendor) {
+  <div class="detail-grid">
+    <mat-card>
+      <mat-card-header><mat-card-title>{{ vendor.company_name }}</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="info-row"><strong>Email:</strong> {{ vendor.contact_email }}</div>
+        <div class="info-row"><strong>Phone:</strong> {{ vendor.contact_number }}</div>
+        <div class="info-row"><strong>License #:</strong> {{ vendor.license_number }}</div>
+        <div class="info-row"><strong>License Expiry:</strong> {{ vendor.license_expiry | date:'mediumDate' }}</div>
+        <div class="info-row"><strong>TRN:</strong> {{ vendor.TRN_number || 'N/A' }}</div>
+        <div class="info-row"><strong>City:</strong> {{ vendor.city?.name || vendor.city }}</div>
+        <div class="info-row"><strong>Status:</strong> {{ vendor.status ? 'Active' : 'Inactive' }}</div>
+      </mat-card-content>
+    </mat-card>
+    @if (vendor.license_copy_url) {
+      <mat-card>
+        <mat-card-header><mat-card-title>License Copy</mat-card-title></mat-card-header>
+        <mat-card-content><img [src]="vendor.license_copy_url | imgSrc" class="license-img" alt="License" /></mat-card-content>
+      </mat-card>
+    }
+  </div>
+}

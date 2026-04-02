@@ -1,0 +1,25 @@
+<section class="sub-header"><div class="header-row"><h3>Tasks</h3>
+  @if (['admin_tasks_add', 'admin_tasks_add_other'] | canAccess) { <a mat-raised-button color="primary" routerLink="/tasks/add"><mat-icon>add</mat-icon> Add Task</a> }
+</div></section>
+@if (pageLoader) { <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div> }
+@if (!pageLoader) {
+  <section class="table-section"><div class="table-wrapper"><table class="data-table"><thead>
+    <tr><th class="pointer" (click)="sort('title')">Title</th><th>Assigned To</th><th>Priority</th><th class="pointer" (click)="sort('due_at')">Due Date</th><th>Status</th><th>Actions</th></tr>
+    <tr class="filter-row">
+      <th><input type="text" [(ngModel)]="searchData.title.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+      <th></th><th></th><th></th>
+      <th><select [(ngModel)]="searchData.status.value" (change)="search()"><option value="">All</option><option value="pending">Pending</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></th>
+      <th class="action-col"><button mat-icon-button color="primary" (click)="search()"><mat-icon>search</mat-icon></button><button mat-icon-button color="warn" (click)="clearFilter()"><mat-icon>close</mat-icon></button></th>
+    </tr>
+  </thead><tbody>
+    @for (item of dataList | paginate: paginator; track item.id) {
+      <tr><td><a class="item-link" [routerLink]="'/tasks/detail/' + item.id">{{ item.title }}</a></td><td>{{ item.assignee?.full_name }}</td><td>{{ item.priority }}</td><td>{{ item.due_at | date:'mediumDate' }}</td><td><span [style.color]="item.status | color">{{ item.status }}</span></td>
+      <td class="action-col">
+        @if (['admin_tasks_update', 'admin_tasks_update_other'] | canAccess) { <a mat-icon-button [routerLink]="'/tasks/edit/' + item.id"><mat-icon>edit</mat-icon></a> }
+        <button mat-icon-button color="warn" (click)="deleteTask(item.id)"><mat-icon>delete</mat-icon></button>
+      </td></tr>
+    }
+    @if (dataList.length === 0) { <tr><td colspan="6" class="empty-state">No tasks found</td></tr> }
+  </tbody></table></div>
+  <div class="pagination-section"><pagination-controls (pageChange)="changePage($event)"></pagination-controls></div></section>
+}
