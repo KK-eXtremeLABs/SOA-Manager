@@ -79,82 +79,68 @@ export const routes: Routes = [
           ),
       },
 
-      // Feature modules (lazy-loaded, placeholders for now)
+      // Associations
       {
         path: 'associations',
         canActivate: [canAccessGuard],
         data: { controle: 'admin_associations_view' },
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/associations/associations.routes').then(m => m.associationsRoutes),
       },
+      // Organizations
       {
         path: 'organizations',
         canActivate: [canAccessGuard],
         data: { controle: 'admin_oam_view' },
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/organizations/organizations.routes').then(m => m.organizationsRoutes),
       },
+      // Vendors
       {
         path: 'vendors',
         canActivate: [canAccessGuard],
         data: { controle: 'admin_vendors_view' },
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/vendors/vendors.routes').then(m => m.vendorsRoutes),
       },
+      // Roles
       {
         path: 'roles',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/roles/roles.routes').then(m => m.rolesRoutes),
       },
+      // Settings
       {
         path: 'setting',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/settings/settings.routes').then(m => m.settingsRoutes),
       },
+      // Tasks
       {
         path: 'tasks',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/tasks/tasks.routes').then(m => m.tasksRoutes),
       },
+      // Error Logs
       {
         path: 'error-logs',
         canActivate: [canAccessGuard],
         data: { controle: 'admin_error_logs_view' },
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/error-logs/error-logs.routes').then(m => m.errorLogsRoutes),
       },
+      // Activity Logs
       {
         path: 'activity-logs',
         canActivate: [canAccessGuard],
         data: { controle: 'admin_activity_logs_view' },
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/activity-logs/activity-logs.routes').then(m => m.activityLogsRoutes),
       },
+      // Online Payments
       {
         path: 'online-payments',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+        loadChildren: () => import('./features/online-payments/online-payments.routes').then(m => m.onlinePaymentsRoutes),
       },
+      // Profile
       {
         path: 'profile',
+        loadChildren: () => import('./features/profile/profile.routes').then(m => m.profileRoutes),
+      },
+      {
+        path: 'profile/view',
         loadComponent: () =>
           import('./features/dashboard/dashboard.component').then(
             (m) => m.DashboardComponent
