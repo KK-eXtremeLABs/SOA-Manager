@@ -1,0 +1,91 @@
+<div class="sidebar-header">
+  <a routerLink="/">
+    <img src="assets/img/logo.svg" alt="ISKAAN" class="sidebar-logo" />
+  </a>
+</div>
+
+<mat-nav-list>
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>dashboard</mat-icon>
+    <span matListItemTitle>Dashboard</span>
+  </a>
+
+  @if ('admin_associations_view' | canAccess) {
+    <a mat-list-item routerLink="/associations" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>apartment</mat-icon>
+      <span matListItemTitle>Associations</span>
+    </a>
+  }
+
+  @if ('admin_oam_view' | canAccess) {
+    <a mat-list-item routerLink="/organizations" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>business</mat-icon>
+      <span matListItemTitle>OA Managers</span>
+    </a>
+  }
+
+  @if ('admin_vendors_view' | canAccess) {
+    <a mat-list-item routerLink="/vendors" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>groups</mat-icon>
+      <span matListItemTitle>Vendors</span>
+    </a>
+  }
+
+  @if (['admin_view_bills', 'admin_view_pricing', 'admin_view_addon', 'admin_view_banking'] | canAccess) {
+    <a mat-list-item routerLink="/accounting" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>calculate</mat-icon>
+      <span matListItemTitle>Accounting</span>
+    </a>
+  }
+
+  @if ('admin_online_payment_view' | canAccess) {
+    <a mat-list-item routerLink="/online-payments" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>payment</mat-icon>
+      <span matListItemTitle>Payments</span>
+    </a>
+  }
+
+  <div class="sidebar-divider"></div>
+
+  @if ('admin_users_view' | canAccess) {
+    <a mat-list-item routerLink="/users" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>people</mat-icon>
+      <span matListItemTitle>Users</span>
+    </a>
+  }
+
+  @if ('admin_roles_view' | canAccess) {
+    <a mat-list-item routerLink="/roles" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+      <span matListItemTitle>Roles</span>
+    </a>
+  }
+
+  @if ('admin_tasks_view_other' | canAccess) {
+    <a mat-list-item routerLink="/tasks" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>task</mat-icon>
+      <span matListItemTitle>Tasks</span>
+    </a>
+  }
+
+  @if ('admin_settings_system' | canAccess) {
+    <a mat-list-item routerLink="/setting" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>settings</mat-icon>
+      <span matListItemTitle>Settings</span>
+    </a>
+  }
+
+  @if ('admin_error_logs_view' | canAccess) {
+    <a mat-list-item routerLink="/error-logs" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>bug_report</mat-icon>
+      <span matListItemTitle>Error Logs</span>
+    </a>
+  }
+
+  @if ('admin_activity_logs_view' | canAccess) {
+    <a mat-list-item routerLink="/activity-logs" routerLinkActive="active-link">
+      <mat-icon matListItemIcon>history</mat-icon>
+      <span matListItemTitle>Activity Logs</span>
+    </a>
+  }
+</mat-nav-list>

@@ -1,0 +1,59 @@
+<mat-toolbar class="header-toolbar">
+  <span class="spacer"></span>
+
+  <!-- Notifications -->
+  @if (profile?.role?.name === 'site_admin') {
+    <button mat-icon-button [matMenuTriggerFor]="notifMenu"
+      [matBadge]="unreadNotifications || null" matBadgeColor="warn" matBadgeSize="small">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <mat-menu #notifMenu="matMenu" class="notif-menu">
+      <div class="notif-header" (click)="$event.stopPropagation()">
+        <strong>Notifications</strong>
+        <span class="notif-count">({{ unreadNotifications }})</span>
+        <span class="mark-all" (click)="markAllNotifIsRead()">Mark all as read</span>
+      </div>
+      @for (item of notificationList; track item.id) {
+        <button mat-menu-item (click)="openNotification(item)" [class.unread]="!item.is_read">
+          <mat-icon>{{ item.object_type | notifIcon }}</mat-icon>
+          <div class="notif-body">
+            <span class="notif-subject">{{ item.subject }}</span>
+            <small class="notif-date">{{ item.created_at | date:'medium' }}</small>
+          </div>
+        </button>
+      }
+      @if (notificationList.length === 0) {
+        <div class="notif-empty">No notifications</div>
+      }
+      @if (notificationList.length > 0) {
+        <a mat-menu-item routerLink="/notifications" class="see-all">See All</a>
+      }
+    </mat-menu>
+  }
+
+  <!-- Profile menu -->
+  <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-btn">
+    <img [src]="profile?.profile_image_url | avatar:profile?.full_name"
+      class="profile-avatar" alt="" />
+    <span class="profile-name">{{ profile?.first_name }}</span>
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <a mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </a>
+    <a mat-menu-item routerLink="/profile/edit">
+      <mat-icon>edit</mat-icon>
+      <span>Update Profile</span>
+    </a>
+    <a mat-menu-item routerLink="/profile/change-password">
+      <mat-icon>vpn_key</mat-icon>
+      <span>Change Password</span>
+    </a>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,147 @@
+<div class="dashboard">
+  <!-- Stat Cards -->
+  <div class="stat-cards">
+    <mat-card class="stat-card card-orange" routerLink="/organizations">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>business</mat-icon>
+          <h2>{{ statistics?.company | number }}</h2>
+        </div>
+        <small>Organizations</small>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card card-blue" routerLink="/vendors">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>groups</mat-icon>
+          <h2>{{ statistics?.vendor | number }}</h2>
+        </div>
+        <small>Vendors</small>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card card-green" routerLink="/associations">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>apartment</mat-icon>
+          <h2>{{ statistics?.association | number }}</h2>
+        </div>
+        <small>Associations</small>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card card-red">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>home</mat-icon>
+          <h2>{{ statistics?.unit | number }}</h2>
+        </div>
+        <small>Units</small>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card card-blue">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>room_service</mat-icon>
+          <h2>{{ eserviceStatistics?.total | number }}</h2>
+        </div>
+        <small>E-Services</small>
+        <div class="eservice-breakdown">
+          <div class="breakdown-item">
+            <strong>{{ eserviceStatistics?.completed | number }}</strong>
+            <small>Completed</small>
+          </div>
+          <div class="breakdown-item">
+            <strong>{{ (eserviceStatistics?.total - eserviceStatistics?.pending - eserviceStatistics?.refund - eserviceStatistics?.completed) | number }}</strong>
+            <small>In Process</small>
+          </div>
+          <div class="breakdown-item">
+            <strong>{{ eserviceStatistics?.pending | number }}</strong>
+            <small>Pending</small>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card card-red">
+      <mat-card-content>
+        <div class="stat-header">
+          <mat-icon>report_problem</mat-icon>
+          <h2>{{ statistics?.complain | number }}</h2>
+        </div>
+        <small>Complaints</small>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Widget placeholder section -->
+  <div class="widgets-section">
+    <div class="widget-row">
+      @if ('admin_associations_view' | canAccess) {
+        <mat-card class="widget-card">
+          <mat-card-header><mat-card-title>Associations</mat-card-title></mat-card-header>
+          <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+        </mat-card>
+      }
+      <mat-card class="widget-card">
+        <mat-card-header><mat-card-title>E-Services Requests</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+      </mat-card>
+      @if ('admin_oam_view' | canAccess) {
+        <mat-card class="widget-card">
+          <mat-card-header><mat-card-title>Organizations</mat-card-title></mat-card-header>
+          <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <div class="widget-row">
+      <mat-card class="widget-card">
+        <mat-card-header><mat-card-title>Services by Associations</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Chart coming soon</p></mat-card-content>
+      </mat-card>
+      <mat-card class="widget-card widget-sm">
+        <mat-card-header><mat-card-title>Services</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Pie chart coming soon</p></mat-card-content>
+      </mat-card>
+      <mat-card class="widget-card widget-sm">
+        <mat-card-header><mat-card-title>Vendor Jobs</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Chart coming soon</p></mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="widget-row">
+      <mat-card class="widget-card">
+        <mat-card-header><mat-card-title>Performance Index</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+      </mat-card>
+      @if (profile?.role?.name === 'site_admin') {
+        <mat-card class="widget-card">
+          <mat-card-header><mat-card-title>Activity Logs</mat-card-title></mat-card-header>
+          <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+        </mat-card>
+      }
+      @if ('admin_vendors_view' | canAccess) {
+        <mat-card class="widget-card">
+          <mat-card-header><mat-card-title>Vendors</mat-card-title></mat-card-header>
+          <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <div class="widget-row">
+      <mat-card class="widget-card">
+        <mat-card-header><mat-card-title>Non-Payers</mat-card-title></mat-card-header>
+        <mat-card-content><p class="placeholder-text">Widget coming soon</p></mat-card-content>
+      </mat-card>
+      @if (['admin_oam_view', 'admin_associations_view'] | canAccess: true) {
+        <mat-card class="widget-card widget-sm">
+          <mat-card-header><mat-card-title>OA Managers Associations</mat-card-title></mat-card-header>
+          <mat-card-content><p class="placeholder-text">Chart coming soon</p></mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>

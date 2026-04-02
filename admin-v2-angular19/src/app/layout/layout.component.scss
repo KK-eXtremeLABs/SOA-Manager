@@ -1,0 +1,28 @@
+@use 'styles/variables' as v;
+
+.layout-container {
+  height: 100vh;
+}
+
+.sidebar {
+  width: v.$sidebar-width;
+  border-right: 1px solid #e0e0e0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+  padding: 24px;
+  background-color: #fafafa;
+}
+
+@media (max-width: v.$breakpoint-md) {
+  .sidebar {
+    width: 0;
+  }
+}
