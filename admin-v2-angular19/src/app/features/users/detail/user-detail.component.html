@@ -1,0 +1,65 @@
+<section class="sub-header">
+  <div class="header-row">
+    <h3>User Detail</h3>
+    <a mat-stroked-button color="primary" routerLink="/users">
+      <mat-icon>chevron_left</mat-icon> Back
+    </a>
+  </div>
+</section>
+
+@if (pageLoader) {
+  <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (user) {
+  <div class="detail-layout">
+    <!-- Profile Card -->
+    <mat-card class="profile-card">
+      <mat-card-content class="text-center">
+        <img [src]="user.profile_image_url | avatar:user.full_name" class="avatar" alt="" />
+        <h4>{{ user.full_name }}</h4>
+        <p class="role-name">{{ user.role?.title }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Info Cards -->
+    <div class="info-cards">
+      <mat-card>
+        <mat-card-header><mat-card-title>Login Information</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="info-row"><strong>Email:</strong> {{ user.email }}</div>
+          <div class="info-row"><strong>Mobile:</strong> {{ user.mobile }}</div>
+          <div class="info-row"><strong>DOB:</strong> {{ user.dob || 'N/A' }}</div>
+          <div class="info-row"><strong>Passport:</strong> {{ user.passport_number || 'N/A' }}</div>
+          <div class="info-row"><strong>Emirates ID:</strong> {{ user.emirates_id || 'N/A' }}</div>
+        </mat-card-content>
+      </mat-card>
+
+      @if (user.company) {
+        <mat-card>
+          <mat-card-header><mat-card-title>Company Information</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <div class="info-row"><strong>Company:</strong> {{ user.company?.company_name }}</div>
+            <div class="info-row"><strong>Type:</strong> {{ user.company?.type }}</div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      @if (user.role?.permissions?.length) {
+        <mat-card>
+          <mat-card-header><mat-card-title>Permissions</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <mat-chip-set>
+              @for (perm of user.role.permissions; track perm.id) {
+                <mat-chip>
+                  <mat-icon matChipAvatar>check_circle</mat-icon>
+                  {{ perm.title }}
+                </mat-chip>
+              }
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+}

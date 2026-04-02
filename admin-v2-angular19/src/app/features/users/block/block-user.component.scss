@@ -1,0 +1,7 @@
+.full-width { width: 100%; }
+.date-row { display: flex; gap: 16px;
+  mat-form-field { flex: 1; }
+}
+.form-actions { text-align: right; margin-top: 8px;
+  button { display: inline-flex; align-items: center; gap: 8px; }
+}

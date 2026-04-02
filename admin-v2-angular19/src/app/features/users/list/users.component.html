@@ -1,0 +1,125 @@
+<section class="sub-header">
+  <div class="header-row">
+    <h3>Users</h3>
+    @if ('admin_users_add' | canAccess) {
+      <a mat-raised-button color="primary" routerLink="/users/add">
+        <mat-icon>add</mat-icon> Add User
+      </a>
+    }
+  </div>
+</section>
+
+@if (pageLoader) {
+  <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (error) {
+  <div class="error-alert">{{ error }}</div>
+}
+
+@if (!pageLoader) {
+  <section class="table-section">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="pointer" (click)="sort('first_name')">First Name</th>
+            <th class="pointer" (click)="sort('last_name')">Last Name</th>
+            <th class="pointer" (click)="sort('email')">Email</th>
+            <th class="pointer" (click)="sort('mobile')">Phone</th>
+            <th class="pointer" (click)="sort('role_id')">Role</th>
+            <th>Actions</th>
+          </tr>
+          <tr class="filter-row">
+            <th><input type="text" [(ngModel)]="searchData.first_name.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th><input type="text" [(ngModel)]="searchData.last_name.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th><input type="text" [(ngModel)]="searchData.email.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th><input type="text" [(ngModel)]="searchData.mobile.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th>
+              <select [(ngModel)]="searchData.role_id.value" (change)="search()">
+                <option value="">All Roles</option>
+                @for (role of roleList; track role.id) {
+                  <option [value]="role.id">{{ role.title }}</option>
+                }
+              </select>
+            </th>
+            <th class="action-col">
+              <button mat-icon-button color="primary" matTooltip="Search" (click)="search()">
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Clear" (click)="clearFilter()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dataList | paginate: paginator; track item.id) {
+            @if (item.role?.name !== 'site_admin') {
+              <tr [class.blocked]="item?.block_user">
+                <td>
+                  @if ('admin_users_detail' | canAccess) {
+                    <a class="user-link" [routerLink]="'/user/detail/' + item.id">
+                      <img [src]="item.profile_image_url | avatar:item.full_name" class="user-avatar" />
+                      <span>{{ item.first_name }}</span>
+                    </a>
+                  } @else {
+                    <img [src]="item.profile_image_url | avatar:item.full_name" class="user-avatar" />
+                    <span>{{ item.first_name }}</span>
+                  }
+                </td>
+                <td>{{ item.last_name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>{{ item.role?.title }}</td>
+                <td class="action-col">
+                  <button mat-icon-button
+                    [color]="item.is_2fa_enabled ? 'primary' : 'warn'"
+                    [matTooltip]="item.is_2fa_enabled ? '2FA Enabled' : '2FA Disabled'"
+                    (click)="toggleTwoFa(item)">
+                    <mat-icon>{{ item.is_2fa_enabled ? 'verified_user' : 'gpp_bad' }}</mat-icon>
+                  </button>
+                  @if (item.is_2fa_enabled) {
+                    <button mat-icon-button color="warn" matTooltip="Reset 2FA" (click)="resetTwoFa(item)">
+                      <mat-icon>refresh</mat-icon>
+                    </button>
+                  }
+                  @if ('admin_users_update' | canAccess) {
+                    <a mat-icon-button color="primary" [routerLink]="'/user/edit/' + item.id" matTooltip="Edit User">
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                  }
+                  @if (profile?.role?.name === 'site_admin' || ('admin_users_delete' | canAccess)) {
+                    <button mat-icon-button color="warn" matTooltip="Delete User" (click)="confirmDelete(item)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-section">
+      <small>Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.totalItems }}</small>
+      <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+    </div>
+  </section>
+}
+
+<!-- Delete Confirmation (inline) -->
+@if (deleteItem?.id) {
+  <div class="confirm-overlay">
+    <div class="confirm-dialog">
+      <h4>Confirm Delete</h4>
+      <p>Are you sure you want to delete <strong>{{ deleteItem.full_name }}</strong>?</p>
+      <div class="confirm-actions">
+        <button mat-raised-button color="warn" (click)="deleteUser()">Yes, Delete</button>
+        <button mat-raised-button (click)="deleteItem = {}">Cancel</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header><mat-card-title>Block User</mat-card-title></mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="blockForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Reason</mat-label>
+        <input matInput formControlName="reason" />
+      </mat-form-field>
+
+      <div class="date-row">
+        <mat-form-field appearance="outline">
+          <mat-label>From Date</mat-label>
+          <input matInput type="date" formControlName="from_date" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>To Date</mat-label>
+          <input matInput type="date" formControlName="to_date" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="warn" type="submit" [disabled]="blockForm.invalid || formSpinner">
+          @if (formSpinner) { <mat-spinner diameter="20"></mat-spinner> }
+          @else { <mat-icon>block</mat-icon> }
+          <span>Block User</span>
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

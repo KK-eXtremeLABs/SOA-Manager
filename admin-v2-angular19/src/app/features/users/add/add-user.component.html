@@ -1,0 +1,129 @@
+<section class="sub-header">
+  <div class="header-row">
+    <h3>{{ userId ? 'Edit User' : 'Add User' }}</h3>
+    <a mat-stroked-button color="primary" [routerLink]="backLink">
+      <mat-icon>chevron_left</mat-icon> Back
+    </a>
+  </div>
+</section>
+
+@if (pageLoader) {
+  <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (!pageLoader && optionsRole.length) {
+  <form [formGroup]="userForm" class="user-form">
+    <!-- Login Details -->
+    <mat-card>
+      <mat-card-header><mat-card-title>Login Details</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>User Role *</mat-label>
+            <mat-select formControlName="role_id" (selectionChange)="changeRole($event.value)">
+              @for (role of optionsRole; track role.value) {
+                <mat-option [value]="role.value">{{ role.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email *</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+
+          @if (!userId) {
+            <mat-form-field appearance="outline">
+              <mat-label>Password *</mat-label>
+              <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm Password *</mat-label>
+              <input matInput type="password" formControlName="confirm_password" />
+            </mat-form-field>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Contact Details -->
+    <mat-card>
+      <mat-card-header><mat-card-title>Contact Details</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name *</mat-label>
+            <input matInput formControlName="first_name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name *</mat-label>
+            <input matInput formControlName="last_name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile *</mat-label>
+            <input matInput formControlName="mobile" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput type="date" formControlName="dob" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Passport Number</mat-label>
+            <input matInput formControlName="passport_number" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Passport Expiry</mat-label>
+            <input matInput type="date" formControlName="passport_expiry" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Emirates ID</mat-label>
+            <input matInput formControlName="emirates_id" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Emirates ID Expiry</mat-label>
+            <input matInput type="date" formControlName="emirates_id_expiry" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Permissions (read-only) -->
+    @if (permissionsList.length) {
+      <mat-card>
+        <mat-card-header><mat-card-title>Permissions</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="permissions-grid">
+            @for (perm of permissionsList; track perm.id) {
+              <mat-checkbox [checked]="true" [disabled]="true">{{ perm.title }}</mat-checkbox>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="saveUser()" [disabled]="userForm.invalid || formSpinner">
+        @if (formSpinner) { <mat-spinner diameter="20"></mat-spinner> }
+        @else { <mat-icon>save</mat-icon> }
+        <span>Save</span>
+      </button>
+    </div>
+  </form>
+}
+
+@if (!pageLoader && !optionsRole.length && !userId) {
+  <div class="no-roles">
+    <p>No User Role has been defined. Please create a role first.</p>
+    <a mat-raised-button color="primary" routerLink="/roles/add">
+      <mat-icon>add</mat-icon> Add Role
+    </a>
+  </div>
+}

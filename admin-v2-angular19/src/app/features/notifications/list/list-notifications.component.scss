@@ -1,0 +1,37 @@
+@use 'styles/variables' as v;
+
+.sub-header { padding: 0 0 16px; }
+.header-row { display: flex; justify-content: space-between; align-items: center; }
+.header-row h3 { margin: 0; color: v.$primary-color; }
+.count { font-size: 0.875rem; color: #666; font-weight: 400; }
+.loading-overlay { display: flex; justify-content: center; padding: 48px 0; }
+
+.search-row { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 16px;
+  .search-field { flex: 1; max-width: 400px; }
+}
+
+.notifications-list { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+.notif-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: background-color 0.2s;
+  &:hover { background-color: #fafafa; }
+  &.unread { background-color: #fff3e0; }
+  &:last-child { border-bottom: none; }
+}
+
+.notif-icon { width: 40px; height: 40px; border-radius: 50%; background: #f5f5f5;
+  display: flex; justify-content: center; align-items: center; flex-shrink: 0;
+  mat-icon { color: v.$primary-color; }
+}
+
+.notif-body { flex: 1; min-width: 0; }
+.notif-subject { font-weight: 500; font-size: 0.875rem; }
+.notif-message { color: #666; font-size: 0.8125rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notif-date { color: #999; }
+
+.notif-actions { flex-shrink: 0; }
+.read-icon { color: #ccc; }
+
+.empty-state { text-align: center; padding: 48px; color: #999; }
+.pagination-section { text-align: center; padding: 16px 0; }

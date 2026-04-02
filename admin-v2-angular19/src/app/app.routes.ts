@@ -29,18 +29,45 @@ export const routes: Routes = [
         canActivate: [canAccessGuard],
         data: { controle: 'admin_users_view' },
         loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ), // placeholder until users module is built
+          import('./features/users/list/users.component').then(
+            (m) => m.UsersComponent
+          ),
+      },
+      {
+        path: 'users/add',
+        canActivate: [canAccessGuard],
+        data: { controle: 'admin_users_add' },
+        loadComponent: () =>
+          import('./features/users/add/add-user.component').then(
+            (m) => m.AddUserComponent
+          ),
+      },
+      {
+        path: 'user/edit/:id',
+        canActivate: [canAccessGuard],
+        data: { controle: 'admin_users_update' },
+        loadComponent: () =>
+          import('./features/users/add/add-user.component').then(
+            (m) => m.AddUserComponent
+          ),
+      },
+      {
+        path: 'user/detail/:id',
+        canActivate: [canAccessGuard],
+        data: { controle: 'admin_users_detail' },
+        loadComponent: () =>
+          import('./features/users/detail/user-detail.component').then(
+            (m) => m.UserDetailComponent
+          ),
       },
 
       // Notifications
       {
         path: 'notifications',
         loadComponent: () =>
-          import('./features/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ), // placeholder
+          import(
+            './features/notifications/list/list-notifications.component'
+          ).then((m) => m.ListNotificationsComponent),
       },
 
       // Feature modules (lazy-loaded, placeholders for now)

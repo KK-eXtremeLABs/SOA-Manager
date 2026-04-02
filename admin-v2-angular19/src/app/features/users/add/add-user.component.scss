@@ -1,0 +1,29 @@
+@use 'styles/variables' as v;
+
+.sub-header { padding: 0 0 16px; }
+.header-row { display: flex; justify-content: space-between; align-items: center; }
+.header-row h3 { margin: 0; color: v.$primary-color; }
+.loading-overlay { display: flex; justify-content: center; padding: 48px 0; }
+
+.user-form {
+  display: flex; flex-direction: column; gap: 16px; max-width: 900px;
+  mat-card { margin-bottom: 0; }
+}
+
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px;
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.permissions-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.form-actions { text-align: right; margin-top: 8px;
+  button { display: inline-flex; align-items: center; gap: 8px; background-color: v.$primary-color; }
+}
+
+.no-roles { text-align: center; padding: 48px; background: white; border-radius: 8px;
+  p { margin-bottom: 16px; color: #c62828; }
+}

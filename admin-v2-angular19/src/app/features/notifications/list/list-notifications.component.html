@@ -1,0 +1,58 @@
+<section class="sub-header">
+  <div class="header-row">
+    <h3>Notifications <span class="count">({{ unreadNotifications }} unread)</span></h3>
+    <button mat-stroked-button color="primary" (click)="markAllAsRead()">
+      <mat-icon>done_all</mat-icon> Mark All as Read
+    </button>
+  </div>
+</section>
+
+<!-- Search -->
+<div class="search-row">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search by subject</mat-label>
+    <input matInput [(ngModel)]="searchSubject" (keyup.enter)="search()" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="search()">Filter</button>
+  <button mat-stroked-button (click)="clearFilter()">Reset</button>
+</div>
+
+@if (pageLoader) {
+  <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (!pageLoader) {
+  <div class="notifications-list">
+    @for (item of dataList | paginate: paginator; track item.id) {
+      <div class="notif-item" [class.unread]="!item.is_read" (click)="openNotification(item)">
+        <div class="notif-icon">
+          <mat-icon>{{ item.object_type | notifIcon }}</mat-icon>
+        </div>
+        <div class="notif-body">
+          <div class="notif-subject">{{ item.subject }}</div>
+          <div class="notif-message">{{ item.message }}</div>
+          <small class="notif-date">{{ item.created_at | date:'medium' }}</small>
+        </div>
+        <div class="notif-actions">
+          @if (!item.is_read) {
+            <button mat-icon-button matTooltip="Mark as read" (click)="markAsRead(item); $event.stopPropagation()">
+              <mat-icon>mail</mat-icon>
+            </button>
+          } @else {
+            <mat-icon class="read-icon">drafts</mat-icon>
+          }
+        </div>
+      </div>
+    }
+
+    @if (dataList.length === 0) {
+      <div class="empty-state">No notifications found</div>
+    }
+  </div>
+
+  <div class="pagination-section">
+    <small>Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.totalItems }}</small>
+    <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+  </div>
+}
