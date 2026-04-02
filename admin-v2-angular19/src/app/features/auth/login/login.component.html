@@ -1,0 +1,58 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="logo-wrapper">
+        <a href="/">
+          <img src="assets/img/logo.svg" alt="ISKAAN" class="logo" />
+        </a>
+      </div>
+      <div class="logo-subtitle">
+        <img src="assets/img/iskaan-admin.svg" alt="ISKAAN Admin" class="admin-logo" />
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" formControlName="username" />
+          @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="forgot-link">
+          <a routerLink="/forgot-password">Forgot password?</a>
+        </div>
+
+        <div class="submit-row">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="(loginForm.touched && loginForm.invalid) || formSpinner"
+          >
+            @if (formSpinner) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              <mat-icon>login</mat-icon>
+            }
+            <span>Sign in</span>
+          </button>
+        </div>
+
+        @if (error) {
+          <div class="error-message">
+            <p>{{ error }}</p>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>

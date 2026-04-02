@@ -1,0 +1,74 @@
+<div class="twofa-page">
+  <div class="twofa-container">
+    <mat-card>
+      @if (verifying) {
+        <div class="loading-overlay">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      }
+
+      <mat-card-content class="text-center">
+        <div class="logo-wrapper">
+          <img src="assets/img/logo.svg" alt="ISKAAN" class="logo" />
+        </div>
+
+        @if (!profile?.google2fa_setup_account) {
+          <h4 class="title">Setup Two-Factor Authentication</h4>
+          <p class="subtitle">
+            Enabling Two-Factor Authentication (2FA) enhances the security of your account.
+          </p>
+          <div class="setup-info">
+            <p>
+              Download and install Google Authenticator. Scan the QR code or copy the below key
+              using Google Authenticator App.
+            </p>
+            @if (sanitizedQrCode) {
+              <div class="qr-wrapper">
+                <img class="qr-code" [src]="sanitizedQrCode" alt="2FA QR Code" />
+                <p class="secret-key">Secret Key: {{ TwoFaData?.record?.secret }}</p>
+              </div>
+            }
+          </div>
+        }
+
+        <form [formGroup]="twoFactorForm">
+          <div class="otp-section">
+            <label class="otp-label">
+              <strong>Open your authenticator app and enter the 6-digit verification code shown.</strong>
+            </label>
+
+            <div class="otp-inputs">
+              @for (i of [0, 1, 2, 3, 4, 5]; track i) {
+                <input
+                  class="otp-input"
+                  type="text"
+                  placeholder="-"
+                  maxlength="1"
+                  (input)="onInput($event, i)"
+                  (keydown)="onKeydown($event, i)"
+                  (paste)="handlePaste($event, i)"
+                  #otpInput
+                />
+              }
+            </div>
+
+            @if (code?.errors?.['pattern']) {
+              <p class="error-hint">Must be a 6-digit number.</p>
+            }
+
+            <div class="back-link" (click)="backToLogin()">
+              <mat-icon>chevron_left</mat-icon>
+              <span>Back To Login</span>
+            </div>
+          </div>
+
+          @if (errorMessage) {
+            <div class="error-alert">
+              {{ errorMessage }}
+            </div>
+          }
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
