@@ -1,0 +1,87 @@
+<section class="sub-header">
+  <div class="header-row">
+    <h3>Associations</h3>
+    <div class="header-actions">
+      <mat-chip-listbox (change)="filterCommunities($event.value)">
+        <mat-chip-option value="active" [selected]="status === 'active'">Active</mat-chip-option>
+        <mat-chip-option value="blocked">Blocked</mat-chip-option>
+        <mat-chip-option value="archived">Archived</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+  </div>
+</section>
+
+@if (pageLoader) {
+  <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div>
+}
+@if (error) {
+  <div class="error-alert">{{ error }}</div>
+}
+
+@if (!pageLoader) {
+  <section class="table-section">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="pointer" (click)="sort('name')">Name</th>
+            <th class="pointer" (click)="sort('email')">Email</th>
+            <th class="pointer" (click)="sort('phone')">Phone</th>
+            <th>OA Manager</th>
+            <th>Units</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          <tr class="filter-row">
+            <th><input type="text" [(ngModel)]="searchData.name.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th><input type="text" [(ngModel)]="searchData.email.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th><input type="text" [(ngModel)]="searchData.phone.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+            <th>
+              <select [(ngModel)]="searchData.company_id.value" (change)="search()">
+                <option value="">All</option>
+                @for (org of organizationList; track org.id) {
+                  <option [value]="org.id">{{ org.company_name }}</option>
+                }
+              </select>
+            </th>
+            <th></th>
+            <th></th>
+            <th class="action-col">
+              <button mat-icon-button color="primary" (click)="search()"><mat-icon>search</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="clearFilter()"><mat-icon>close</mat-icon></button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dataList | paginate: paginator; track item.id) {
+            <tr>
+              <td>
+                <a class="item-link" [routerLink]="'/associations/details/' + item.id">{{ item.name }}</a>
+              </td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{{ item.oam_company?.company_name }}</td>
+              <td>{{ item.units_count }}</td>
+              <td>
+                <app-status-dot [color]="item.subscription_status === 'active' ? '#4caf50' : '#f44336'" [title]="item.subscription_status"></app-status-dot>
+                {{ item.subscription_status }}
+              </td>
+              <td class="action-col">
+                <a mat-icon-button color="primary" [routerLink]="'/associations/details/' + item.id" matTooltip="View Details">
+                  <mat-icon>visibility</mat-icon>
+                </a>
+              </td>
+            </tr>
+          }
+          @if (dataList.length === 0) {
+            <tr><td colspan="7" class="empty-state">No associations found</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-section">
+      <small>Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.totalItems }}</small>
+      <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+    </div>
+  </section>
+}

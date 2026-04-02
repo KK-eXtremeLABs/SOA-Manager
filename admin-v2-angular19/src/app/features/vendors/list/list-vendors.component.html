@@ -1,0 +1,22 @@
+<section class="sub-header"><div class="header-row"><h3>Vendors</h3></div></section>
+@if (pageLoader) { <div class="loading-overlay"><mat-spinner diameter="40"></mat-spinner></div> }
+@if (!pageLoader) {
+  <section class="table-section"><div class="table-wrapper"><table class="data-table"><thead>
+    <tr><th class="pointer" (click)="sort('company_name')">Company Name</th><th class="pointer" (click)="sort('contact_email')">Email</th><th>License #</th><th>City</th><th>Status</th><th>Actions</th></tr>
+    <tr class="filter-row">
+      <th><input type="text" [(ngModel)]="searchData.company_name.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+      <th><input type="text" [(ngModel)]="searchData.contact_email.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+      <th><input type="text" [(ngModel)]="searchData.license_number.value" (keyup.enter)="search()" placeholder="Search..." /></th>
+      <th></th><th></th>
+      <th class="action-col"><button mat-icon-button color="primary" (click)="search()"><mat-icon>search</mat-icon></button><button mat-icon-button color="warn" (click)="clearFilter()"><mat-icon>close</mat-icon></button></th>
+    </tr>
+  </thead><tbody>
+    @for (item of dataList | paginate: paginator; track item.id) {
+      <tr><td><a class="item-link" [routerLink]="'/vendors/details/' + item.id">{{ item.company_name }}</a></td><td>{{ item.contact_email }}</td><td>{{ item.license_number }}</td><td>{{ item.city }}</td><td>{{ item.status ? 'Active' : 'Inactive' }}</td>
+      <td class="action-col"><a mat-icon-button color="primary" [routerLink]="'/vendors/details/' + item.id"><mat-icon>visibility</mat-icon></a></td></tr>
+    }
+    @if (dataList.length === 0) { <tr><td colspan="6" class="empty-state">No vendors found</td></tr> }
+  </tbody></table></div>
+  <div class="pagination-section"><small>Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.totalItems }}</small><pagination-controls (pageChange)="changePage($event)"></pagination-controls></div>
+  </section>
+}
