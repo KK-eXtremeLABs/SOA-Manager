@@ -1,0 +1,72 @@
+@use 'variables' as v;
+
+.main-container {
+  min-height: 100vh;
+
+  &.bg-img {
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  &.embedded {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.inner-container {
+  padding: 24px;
+  min-height: calc(100vh - #{v.$header-height} - #{v.$footer-height});
+}
+
+.sub-header {
+  padding: 0 16px 12px;
+
+  h3 {
+    color: v.$primary-color;
+    margin: 0;
+  }
+}
+
+// Scrollbar
+.scrollbar {
+  max-height: 400px;
+  overflow: hidden auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Responsive sidebar
+@media (max-width: v.$breakpoint-md) {
+  .mat-sidenav {
+    width: 0 !important;
+  }
+}
+
+// Utility classes
+.hide {
+  display: none;
+}
+
+.text-primary {
+  color: v.$primary-color !important;
+}
+
+.bg-primary {
+  background-color: v.$primary-color !important;
+}

@@ -1,0 +1,73 @@
+@use '@angular/material' as mat;
+@use 'styles/variables' as v;
+@use 'styles/layout';
+@use 'styles/utilities';
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$red-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  background-color: #fafafa;
+  color: v.$skin-text;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
+  height: 100%;
+}
+
+// Custom currency font
+@font-face {
+  font-family: currency-symbol-v2;
+  src: url('./assets/currency/currency-symbol-v2.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  unicode-range: u+e000, u+e001;
+}
+
+// Override Material primary color CSS variables to match ISKAAN red
+:root {
+  --iskaan-primary: #{v.$primary-color};
+  --iskaan-primary-dark: #{v.$primary-color-dark};
+  --iskaan-secondary: #{v.$secondary-color};
+  --iskaan-gradient-start: #{v.$skin-gradient-start};
+  --iskaan-gradient-end: #{v.$skin-gradient-end};
+  --iskaan-navbar: #{v.$skin-navbar};
+  --iskaan-footer: #{v.$skin-footer};
+  --iskaan-sidebar-width: #{v.$sidebar-width};
+}
+
+// Snackbar (replaces MDB Toast)
+.mat-mdc-snack-bar-container {
+  &.success-snackbar .mdc-snackbar__surface {
+    background-color: #4caf50 !important;
+  }
+
+  &.error-snackbar .mdc-snackbar__surface {
+    background-color: #f44336 !important;
+  }
+
+  &.warning-snackbar .mdc-snackbar__surface {
+    background-color: #ff9800 !important;
+  }
+}
+
+// Links
+a {
+  color: v.$primary-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
