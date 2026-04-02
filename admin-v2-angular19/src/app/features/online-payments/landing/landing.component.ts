@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
-  selector: 'app-online-payments-landing',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule],
-  template: `<mat-card><mat-card-header><mat-card-title>Online Payments</mat-card-title></mat-card-header><mat-card-content><p>Component ready for implementation</p></mat-card-content></mat-card>`,
+  selector: 'app-online-payments-landing', standalone: true,
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatIconModule],
+  template: `<div style="margin-bottom:16px"><a mat-stroked-button routerLink="list" routerLinkActive="active-btn"><mat-icon>list</mat-icon> Payments List</a></div><router-outlet />`,
+  styles: ['.active-btn{background-color:#c4272e!important;color:white!important}'],
 })
 export class OnlinePaymentsLandingComponent {}

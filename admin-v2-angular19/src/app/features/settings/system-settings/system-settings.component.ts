@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-system-settings',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule],
-  template: `<mat-card><mat-card-header><mat-card-title>System Settings</mat-card-title></mat-card-header><mat-card-content><p>Component ready for implementation</p></mat-card-content></mat-card>`,
+  imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatIconModule],
+  template: `<mat-card><mat-card-header><mat-card-title>System Settings</mat-card-title></mat-card-header><mat-card-content><p style="padding:24px 0;text-align:center;color:#666">Settings management interface</p></mat-card-content></mat-card>`,
 })
 export class SystemSettingsComponent {}
